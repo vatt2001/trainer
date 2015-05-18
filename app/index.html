@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" ng-app="trainerApp">
+<head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/controllers.js"></script>
+</head>
+<body ng-controller="trainCtrl">
+
+<ul>
+    <li ng-repeat="word in words">{{word.name}}: {{word.guessed}}</li>
+</ul>
+
+</body>
+</html>
