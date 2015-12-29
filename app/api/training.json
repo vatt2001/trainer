@@ -4,19 +4,19 @@
       "id": 1,
       "spelling": "Alpha",
       "translation": "Альфа",
-      "transcription": "alfa"
+      "transcription": "άλφα"
     },
     {
       "id": 2,
       "spelling": "Beta",
       "translation": "Бета",
-      "transcription": "beta"
+      "transcription": "βήτα"
     },
     {
       "id": 3,
       "spelling": "Gamma",
       "translation": "Гамма",
-      "transcription": "gamma"
+      "transcription": "γάμμα"
     }
   ]
 }

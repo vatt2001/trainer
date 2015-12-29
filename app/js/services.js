@@ -9,9 +9,13 @@ trainerApp.service('Server', ['$resource',
     function($resource){
         return {
             userResource: $resource('api/user/:action/', {action: '@action'}),
-            wordsResource: $resource('api/words/:id', {id: '@id'}),
+            //wordsResource: $resource('api/words/:id', {id: '@id'}),
             //trainingResource: $resource('api/training/:action', {action: '@action'}),
+
+            // Temporary resources
+            wordsResource: $resource('api/words.json'),
             trainingResource: $resource('api/training.json'),
+            trainingStatsResource: $resource('api/training_stats.json'),
 
             userLogin: function(email, password) {
                 return this.userResource.save({action: 'login', email: email, password: password}).$promise;
@@ -46,7 +50,7 @@ trainerApp.service('Server', ['$resource',
             },
 
             getTrainingStats: function() {
-                return this.trainingResource.get({action: 'stats'}).$promise;
+                return this.trainingStatsResource.get({action: 'stats'}).$promise;
             }
         };
     }

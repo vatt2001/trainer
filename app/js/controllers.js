@@ -6,6 +6,20 @@
 trainerApp.controller('HomeController', ['$scope', '$location', 'Server',
     function($scope, $location, Server) {
 
+        $scope.isWorking = true;
+        $scope.stats = null;
+
+        Server.getTrainingStats().then(
+            function(response) {
+                $scope.isWorking = false;
+                $scope.stats = response;
+            },
+            function(error) {
+                $scope.isWorking = false;
+                notify("Error receiving statistics from server: " + error.statusText);
+            }
+        );
+
         $scope.go = function(path) {
             $location.path(path);
         };
@@ -18,6 +32,21 @@ trainerApp.controller('HomeController', ['$scope', '$location', 'Server',
  */
 trainerApp.controller('DictController', ['$scope', '$location', 'Server',
     function($scope, $location, Server) {
+
+        $scope.isWorking = true;
+        $scope.words = [];
+
+        Server.listWords().then(
+            function(response) {
+                $scope.isWorking = false;
+                $scope.words = response.words;
+            },
+            function(error) {
+                $scope.isWorking = false;
+                notify("Error receiving words from server: " + error.statusText);
+                $location.path('/');
+            }
+        );
 
         $scope.go = function(path) {
             $location.path(path);

@@ -1,8 +1,18 @@
 <h1>Trainer</h1>
-<div class="stats">Statistics:</div>
-<ul>
-    <li data-ng-repeat="stat in stats">{{stat}}</li>
-</ul>
+
+<div data-ng-if="isWorking">
+    <img src="img/loading.gif" alt="Loading..."/>
+</div>
+
+<div data-ng-if="stats !== null">
+    <div class="stats">Statistics:</div>
+    <ul>
+        <li>Total words in dictionary: {{stats.words_total}}</li>
+        <li>Words to repeat: {{stats.words_to_repeat}}</li>
+        <li>Words learned: {{stats.words_learned}}</li>
+    </ul>
+</div>
+
 <div>
     <button class="btn btn-primary btn-lg" data-ng-click="go('/train-prepare')">Train</button>
     <button class="btn btn-default btn-lg" data-ng-click="go('/dict')">My Dictionary</button>

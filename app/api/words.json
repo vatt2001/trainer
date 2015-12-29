@@ -1,0 +1,52 @@
+{
+  "words": [
+    {
+      "id": 1,
+      "spelling": "Alpha",
+      "translation": "Альфа",
+      "transcription": "άλφα"
+    },
+    {
+      "id": 2,
+      "spelling": "Beta",
+      "translation": "Бета",
+      "transcription": "βήτα"
+    },
+    {
+      "id": 3,
+      "spelling": "Gamma",
+      "translation": "Гамма",
+      "transcription": "γάμμα"
+    },
+    {
+      "id": 4,
+      "spelling": "Delta",
+      "translation": "Дельта",
+      "transcription": "δέλτα"
+    },
+    {
+      "id": 5,
+      "spelling": "Epsilon",
+      "translation": "Эпсилон",
+      "transcription": "έψιλον"
+    },
+    {
+      "id": 6,
+      "spelling": "Zeta",
+      "translation": "Зета",
+      "transcription": "ζήτα"
+    },
+    {
+      "id": 7,
+      "spelling": "Eta",
+      "translation": "Эта",
+      "transcription": "ήτα"
+    },
+    {
+      "id": 8,
+      "spelling": "Theta",
+      "translation": "Тета",
+      "transcription": "θήτα"
+    }
+  ]
+}
