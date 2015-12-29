@@ -1,18 +1,31 @@
 <!doctype html>
-<html lang="en" ng-app="trainerApp">
+<html lang="en" data-ng-app="trainerApp">
 <head>
     <meta charset="utf-8">
     <title>My HTML File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/angular-notify/angular-notify.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-notify/angular-notify.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <style>
+        h1 { margin-top: 0; }
+        .word-area { margin: 10px 0; padding: 10px 0 0 0; border-radius: 6px; font-size: 130%; }
+    </style>
 </head>
-<body ng-controller="trainCtrl">
-
-<ul>
-    <li ng-repeat="word in words">{{word.name}}: {{word.guessed}}</li>
-</ul>
-
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <div data-ng-view="">Loading...</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

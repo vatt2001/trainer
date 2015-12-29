@@ -15,19 +15,47 @@
 
 
 API сервера:
+- / - редирект либо на /login, либо на /home
 - /login - авторизация (POST: email, password)
 - /logout - выйти
 - /train - основной скрипт, делающий запросы по API и показывающий слова
-- /stats - сводная статистика (всего слов, уже изучено, в изучении)
-- /words - список всех слов с базовой статистикой и фильтром (GET: q, POST: action=add/repeat/delete, id=<word_id>)
+  - загрузить список слов для изучения (в это время показывать крутилку)
+  - показать все слова
+  - показать результаты, в фоновом режиме отправить результаты на сервер (показать крутилку)
+  - по окончании отправки результатов на сервер показать кнопки: Train again, Home
+- /home - сводная статистика (всего слов, уже изучено, в изучении), кнопки: Train, Add word, My dictionary
+- /dict - список всех слов с базовой статистикой и фильтром (GET: q[uery], p[age])
   - базовая статистика: количество повторов, % успешности, сколько еще раз осталось повторять до изучения
-- /words/add (POST): id, spelling, translation
-- /words/delete (POST): id
-- /words/repeat (POST): id
-- /api/training_start - получить список слов для очередного изучения (GET)
-  - words: [{id, spelling, translation, transcription}]
-- /api/training_finish - загрузить результат изучения (POST)
-  - result: [{word_id, is_correct}]
+- /dict/:word_id - показать одно слово с транскрипцией (надо ли?)
+  
+- /api/user/login (POST) - login, create user session
+  - Request: {email, password}
+  - Response: 200, session cookie
+- /api/user/logout (POST)
+  - Requst: empty
+  - Response: 200
+- /api/words/ (GET) - list words in dictionary
+  - Request: empty
+  - Response: 200, {words:[{id, spelling, translation, transcription, training_qty_total, training_qty_correct}]}
+- /api/words/ (POST) - add word
+  - Request: {spelling, translation}
+  - Response: 201
+- /api/words/:id (DELETE) - delete word
+  - Requst: empty
+  - Response: 200
+- /api/words/:id (PUT) - repeat word
+  - Requst: empty
+  - Response: 200
+- /api/training (GET) - получить список слов для очередного изучения
+  - Request: empty
+  - Response: 200, {words:[{id, spelling, translation, transcription}]}
+- /api/training (POST/PUT) - загрузить результат изучения
+  - Request: {answers:[{word_id, is_correct}]}
+  - Response: 200
+- /api/training/stats (GET) - get current training statistics
+  - Request: empty
+  - Response: 200, {words_total, words_to_repeat, words_learned}
+  
 
 
 Модель БД:

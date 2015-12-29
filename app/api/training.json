@@ -1,0 +1,22 @@
+{
+  "words": [
+    {
+      "id": 1,
+      "spelling": "Alpha",
+      "translation": "Альфа",
+      "transcription": "alfa"
+    },
+    {
+      "id": 2,
+      "spelling": "Beta",
+      "translation": "Бета",
+      "transcription": "beta"
+    },
+    {
+      "id": 3,
+      "spelling": "Gamma",
+      "translation": "Гамма",
+      "transcription": "gamma"
+    }
+  ]
+}

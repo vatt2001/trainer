@@ -1,0 +1,13 @@
+<h1>Training result</h1>
+
+<div class="word-area clearfix">
+    <p class="text-success">Remembered: {{getResultRememberedQty()}}</p>
+    <p class="text-danger">Forgotten: {{getResultForgottenQty()}}</p>
+</div>
+
+<div>
+    <button class="btn btn-primary btn-lg" data-ng-click="go('/train-prepare')">Train again</button>
+    <button class="btn btn-default btn-lg" data-ng-click="go('/home')">Home</button>
+</div>
+
+<div data-ng-init="checkStarted()"></div>

@@ -1,0 +1,16 @@
+<h1>Dictionary</h1>
+<div>
+    <button class="btn btn-default" data-ng-click="go('/home')">Home</button>
+    <button class="btn btn-primary">Add word</button>
+</div>
+<h3>Your words:</h3>
+<div>
+    <form>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Filter" data-ng-model="query">
+        </div>
+    </form>
+</div>
+<ul>
+    <li data-ng-repeat="word in words">{{word}}</li>
+</ul>
