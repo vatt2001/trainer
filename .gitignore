@@ -1,2 +1,9 @@
 .idea/workspace.xml
 node_modules
+/project/boot/
+/project/plugins/project
+target/
+lib_managed/
+src_managed/
+test-output/
+.classpath_nb
