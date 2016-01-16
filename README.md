@@ -34,6 +34,7 @@ API сервера:
 - /api/user/logout (POST)
   - Requst: empty
   - Response: 200
+  
 - /api/words/ (GET) - list words in dictionary
   - Request: empty
   - Response: 200, {words:[{id, spelling, translation, transcription, training_qty_total, training_qty_correct}]}
@@ -46,6 +47,7 @@ API сервера:
 - /api/words/:id (PUT) - repeat word
   - Requst: empty
   - Response: 200
+  
 - /api/training (GET) - получить список слов для очередного изучения
   - Request: empty
   - Response: 200, {words:[{id, spelling, translation, transcription}]}

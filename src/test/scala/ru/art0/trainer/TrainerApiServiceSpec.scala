@@ -1,11 +1,11 @@
-package com.example
+package ru.art0.trainer
 
 import org.specs2.mutable.Specification
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._
 
-class MyServiceSpec extends Specification with Specs2RouteTest with MyService {
+class TrainerApiServiceSpec extends Specification with Specs2RouteTest with TrainerApiService {
   def actorRefFactory = system
   
   "MyService" should {
