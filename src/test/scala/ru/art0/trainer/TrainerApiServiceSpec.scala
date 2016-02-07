@@ -11,19 +11,19 @@ class TrainerApiServiceSpec extends Specification with Specs2RouteTest with Trai
   "MyService" should {
 
     "return a greeting for GET requests to the root path" in {
-      Get() ~> myRoute ~> check {
+      Get() ~> route ~> check {
         responseAs[String] must contain("Say hello")
       }
     }
 
     "leave GET requests to other paths unhandled" in {
-      Get("/kermit") ~> myRoute ~> check {
+      Get("/kermit") ~> route ~> check {
         handled must beFalse
       }
     }
 
     "return a MethodNotAllowed error for PUT requests to the root path" in {
-      Put() ~> sealRoute(myRoute) ~> check {
+      Put() ~> sealRoute(route) ~> check {
         status === MethodNotAllowed
         responseAs[String] === "HTTP method not allowed, supported methods: GET"
       }

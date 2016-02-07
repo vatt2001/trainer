@@ -1,40 +1,41 @@
 package ru.art0.trainer.controllers
 
-import ru.art0.trainer.ServiceLocator
 import ru.art0.trainer.services.WordsService.AddWordData
+import ru.art0.trainer.services.WordsServiceComponent
 import spray.http.MediaTypes._
 import spray.routing.HttpService
 import scala.concurrent.ExecutionContext.Implicits.global
+import spray.httpx.SprayJsonSupport._
 import ru.art0.trainer.helpers.JsonProtocol._
 import spray.routing.PathMatchers.IntNumber
 
 trait WordsController extends BaseController {
 
-  this: HttpService =>
+  this: HttpService with WordsServiceComponent =>
 
-  val wordsRoute =
+  val route =
     pathPrefix("words") {
       get {
-        onSuccess(ServiceLocator.getWordService.getWords(DefaultUserId)) {
+        onSuccess(wordsService.getWords(DefaultUserId)) {
           complete(_)
         }
       } ~
       post {
         entity(as[AddWordData]) { data =>
-          onSuccess(ServiceLocator.getWordService.addWord(DefaultUserId, data)) {
-            complete(_)
+          onSuccess(wordsService.addWord(DefaultUserId, data)) { result =>
+            complete("OK")
           }
         }
       } ~
       path(IntNumber) { wordStudyId =>
         put {
-          onSuccess(ServiceLocator.getWordService.repeatWord(wordStudyId)) {
-            complete(_)
+          onSuccess(wordsService.repeatWord(wordStudyId)) { result =>
+            complete("OK")
           }
         } ~
           delete {
-            onSuccess(ServiceLocator.getWordService.deleteWord(wordStudyId)) {
-              complete(_)
+            onSuccess(wordsService.deleteWord(wordStudyId)) { result =>
+              complete("OK")
             }
           }
       }

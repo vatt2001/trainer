@@ -4,7 +4,7 @@ case class Word(id: Int, spelling: String, translation: String, transcription: S
 
 trait WordModel extends AbstractModel {
 
-  import databaseProfile.simple._
+  import driverProfile._
 
   class WordTable(tag: Tag) extends Table[Word](tag, "word") {
     def id = column[Int]("id", O.PrimaryKey)
@@ -17,7 +17,7 @@ trait WordModel extends AbstractModel {
     def spellingIdx = index("idx_word__spelling", spelling, unique = false)
   }
 
-  val words = TableQuery[Word]
+  val words = TableQuery[WordTable]
 }
 
 
