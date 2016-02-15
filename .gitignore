@@ -7,3 +7,4 @@ lib_managed/
 src_managed/
 test-output/
 .classpath_nb
+db.sqlite

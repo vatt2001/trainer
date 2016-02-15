@@ -1,6 +1,7 @@
 package ru.art0.trainer.services
 
-import ru.art0.trainer.models.WordStudy
+import ru.art0.trainer.components.{ExecutionContextHolderComponent, ExecutionContextHolder, DaoComponent, DatabaseComponent}
+import ru.art0.trainer.models.{StudyMethod, Word, WordStudy}
 import ru.art0.trainer.services.WordsService.AddWordData
 
 import scala.concurrent.Future
@@ -27,9 +28,25 @@ trait WordsService {
 
 class WordsServiceImpl extends WordsService {
 
-  def getWords(userId: Int): Future[Seq[WordStudy]] = throw new RuntimeException("Not implemented")
+  this: DaoComponent with ExecutionContextHolderComponent =>
 
-  def addWord(userId: Int, data: AddWordData): Future[Boolean] = throw new RuntimeException("Not implemented")
+  implicit val ec = executionContextHolder.context
+
+  def getWords(userId: Int): Future[Seq[WordStudy]] = dao.getWordStudiesByUserId(userId)
+
+  def addWord(userId: Int, data: AddWordData): Future[Boolean] = {
+    for {
+      wordId <- dao.upsertWord(Word(0, data.spelling, data.translation))
+      wordStudyId <- dao.upsertWordStudy(
+        WordStudy(
+          id = 0,
+          userId = userId,
+          wordId = wordId.get,
+          studyMethod = StudyMethod.Simple
+        )
+      )
+    } yield (wordStudyId.isDefined)
+  }
 
   def deleteWord(wordStudyId: Int): Future[Boolean] = throw new RuntimeException("Not implemented")
 

@@ -1,6 +1,6 @@
 package ru.art0.trainer.models
 
-case class Word(id: Int, spelling: String, translation: String, transcription: String)
+case class Word(id: Int, spelling: String, translation: String, transcription: Option[String] = None)
 
 trait WordModel extends AbstractModel {
 
@@ -10,7 +10,7 @@ trait WordModel extends AbstractModel {
     def id = column[Int]("id", O.PrimaryKey)
     def spelling = column[String]("spelling")
     def translation = column[String]("translation")
-    def transcription = column[String]("transcription")
+    def transcription = column[Option[String]]("transcription")
 
     def * = (id, spelling, translation, transcription) <> (Word.tupled, Word.unapply)
 

@@ -16,6 +16,10 @@ trait GeneralConfig {
 
   val dbUrl = config.getString(Keys.DbUrl)
 
+  val trainerHost = config.getString(Keys.TrainerHost)
+
+  val trainerPort = config.getInt(Keys.TrainerPort)
+
   private val config = loadConfig
 }
 
@@ -30,5 +34,7 @@ class GeneralConfigImpl extends GeneralConfig {
 object GeneralConfig {
   object Keys {
     val DbUrl = "db.url"
+    val TrainerHost = "trainer.host"
+    val TrainerPort = "trainer.port"
   }
 }

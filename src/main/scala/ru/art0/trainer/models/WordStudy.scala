@@ -7,8 +7,8 @@ case class WordStudy(
   userId: Int,
   wordId: Int,
   studyMethod: StudyMethod,
-  trainingQtyTotal: Int,
-  trainingQtyCorrect: Int
+  trainingQtyTotal: Int = 0,
+  trainingQtyCorrect: Int = 0
 )
 
 trait WordStudyModel extends AbstractModel {

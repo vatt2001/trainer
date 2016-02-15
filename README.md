@@ -65,3 +65,7 @@ API сервера:
 - word: id, spelling, translation, transcription
 - method: id, name
 - training: id, user_id, method_id, word_id, created_at, next_repeat_at, tries, correct, method_step, is_learned
+
+
+TODO:
+- add slick transactions
