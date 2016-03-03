@@ -21,7 +21,7 @@ trait DatabaseImpl extends Database {
 
   this: ConfigComponent =>
 
-  override val db = Database.forURL(config.dbUrl)
+  override val db = Database.forURL(config.dbUrl, driver = config.dbDriver)
 
   override def run[R](a: DBIOAction[R, NoStream, Nothing]): Future[R] = db.run(a)
 }

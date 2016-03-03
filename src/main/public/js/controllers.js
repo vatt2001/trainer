@@ -3,8 +3,8 @@
 /**
  * This controller manages home page
  */
-trainerApp.controller('HomeController', ['$scope', '$location', 'Server',
-    function($scope, $location, Server) {
+trainerApp.controller('HomeController', ['$scope', '$location', 'Server', 'notify',
+    function($scope, $location, Server, notify) {
 
         $scope.isWorking = true;
         $scope.stats = null;
@@ -16,7 +16,7 @@ trainerApp.controller('HomeController', ['$scope', '$location', 'Server',
             },
             function(error) {
                 $scope.isWorking = false;
-                notify("Error receiving statistics from server: " + error.statusText);
+                notify("Error receiving statistics from server: " + error);
             }
         );
 
@@ -30,8 +30,8 @@ trainerApp.controller('HomeController', ['$scope', '$location', 'Server',
  * This controller performs dictionary management: displays the dictionary from server, allows quick search on it
  * and adding new words
  */
-trainerApp.controller('DictController', ['$scope', '$location', 'Server',
-    function($scope, $location, Server) {
+trainerApp.controller('DictController', ['$scope', '$location', 'Server', 'notify',
+    function($scope, $location, Server, notify) {
 
         $scope.isWorking = true;
         $scope.words = [];
@@ -43,7 +43,7 @@ trainerApp.controller('DictController', ['$scope', '$location', 'Server',
             },
             function(error) {
                 $scope.isWorking = false;
-                notify("Error receiving words from server: " + error.statusText);
+                notify("Error receiving words from server: " + error);
                 $location.path('/');
             }
         );
@@ -51,6 +51,23 @@ trainerApp.controller('DictController', ['$scope', '$location', 'Server',
         $scope.go = function(path) {
             $location.path(path);
         };
+
+        $scope.getStatusIcon = function(statusName) {
+            switch (statusName) {
+                case "learning-waiting": return "glyphicon glyphicon-time";
+                case "learning-ready": return "";
+                case "learned": return "glyphicon glyphicon-ok";
+                default: return "";
+            }
+        }
+        $scope.getStatusRowBg = function(statusName) {
+            switch (statusName) {
+                case "learning-waiting": return "warning";
+                case "learning-ready": return "";
+                case "learned": return "success";
+                default: return "";
+            }
+        }
     }
 ]);
 
@@ -88,7 +105,7 @@ trainerApp.controller('TrainController', ['$scope', '$routeParams', '$location',
                 },
                 function(error) {
                     $scope.isWorking = false;
-                    notify("Error getting new training details from server: " + error.statusText);
+                    notify("Error getting new training details from server: " + error);
                     $location.path('/');
                 }
             );
@@ -180,7 +197,7 @@ trainerApp.controller('TrainController', ['$scope', '$routeParams', '$location',
                     $scope.isWorking = false;
                 },
                 function(error) {
-                    notify("Error submitting results: " + error.statusText);
+                    notify("Error submitting results: " + error);
                     $scope.isWorking = false;
                 }
             );

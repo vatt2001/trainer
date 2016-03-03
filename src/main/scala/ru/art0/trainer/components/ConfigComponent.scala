@@ -14,13 +14,16 @@ trait GeneralConfig {
 
   def loadConfig: Config
 
+  val config = loadConfig
+
   val dbUrl = config.getString(Keys.DbUrl)
+  val dbDriver = config.getString(Keys.DbDriver)
 
   val trainerHost = config.getString(Keys.TrainerHost)
-
   val trainerPort = config.getInt(Keys.TrainerPort)
 
-  private val config = loadConfig
+  val trainerTrainingLimit = config.getInt(Keys.TrainerTrainingLimit)
+
 }
 
 
@@ -34,7 +37,9 @@ class GeneralConfigImpl extends GeneralConfig {
 object GeneralConfig {
   object Keys {
     val DbUrl = "db.url"
+    val DbDriver = "db.driver"
     val TrainerHost = "trainer.host"
     val TrainerPort = "trainer.port"
+    val TrainerTrainingLimit = "trainer.training.limit"
   }
 }

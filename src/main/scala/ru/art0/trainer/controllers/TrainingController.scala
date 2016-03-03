@@ -21,12 +21,12 @@ trait TrainingController extends BaseController {
         } ~
           post {
             entity(as[TrainingResult]) { data =>
-              onSuccess(trainingService.submit(DefaultUserId, data)) { result =>
-                complete("OK")
+              onSuccess(trainingService.submit(DefaultUserId, data)) {
+                complete(_)
               }
             }
           }
-      }
+      } ~
       path("stats") {
         get {
           onSuccess(trainingService.getStats(DefaultUserId)) {

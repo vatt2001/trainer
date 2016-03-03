@@ -7,7 +7,7 @@ trait WordModel extends AbstractModel {
   import driverProfile._
 
   class WordTable(tag: Tag) extends Table[Word](tag, "word") {
-    def id = column[Int]("id", O.PrimaryKey)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def spelling = column[String]("spelling")
     def translation = column[String]("translation")
     def transcription = column[Option[String]]("transcription")

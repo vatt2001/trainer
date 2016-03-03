@@ -27,8 +27,8 @@ trait AbstractModel {
     { timestamp => timestamp.toLocalDateTime}
   )
 
-  implicit lazy val studyMethodMapper = MappedColumnType.base[StudyMethod.StudyMethod, String](
-    { b => b.toString },
-    { i => StudyMethod.withName(i) }
+  implicit lazy val studyMethodMapper = MappedColumnType.base[StudyMethod.StudyMethod, Int](
+    { b => b.id },
+    { i => StudyMethod.apply(i) }
   )
 }

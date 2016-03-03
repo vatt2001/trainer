@@ -1,10 +1,9 @@
 package ru.art0.trainer
 
-import akka.actor.{ActorContext, Actor}
+import akka.actor.Actor
+import akka.event.Logging
 import ru.art0.trainer.ComponentWiring.{TrainingServiceComponentImpl, WordsServiceComponentImpl}
 import ru.art0.trainer.controllers.{TrainingController, WordsController}
-import ru.art0.trainer.services.WordsService.AddWordData
-import ru.art0.trainer.services.WordsServiceComponent
 import spray.routing._
 import spray.http._
 import MediaTypes._
@@ -40,20 +39,17 @@ trait TrainerApiService extends HttpService {
       with ActorContextHolderImpl
 
 
-  val route =
+  val route = logRequestResponse("TRAINER", Logging.InfoLevel) {
     respondWithMediaType(`application/json`) {
-      pathEndOrSingleSlash {
-        get {
-          complete("OK")
-        }
-      } ~
       pathPrefix("api") {
         pathPrefix("user") {
           complete("Not implemented")
         } ~
         wordsController.route ~
         trainingController.route
-      } ~
-      getFromResourceDirectory("../public")
-    }
+      }
+    } ~
+      getFromResourceDirectory("../public") ~
+      getFromDirectory("src/main/public") // TODO: move to config
+  }
 }

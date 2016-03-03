@@ -1,6 +1,9 @@
 package ru.art0.trainer.components
 
+import java.time.Instant
+
 import ru.art0.trainer.models._
+import ru.art0.trainer.services.TrainingService.TrainingStats
 
 import scala.concurrent.Future
 
@@ -16,21 +19,25 @@ trait Dao {
   def upsertWord(word: Word): Future[Option[Int]]
   def deleteWord(wordId: Int): Future[Boolean]
 
-  def getWordStudiesByUserId(userId: Int): Future[Seq[WordStudy]]
+  def getWordStudies(ids: Seq[Int]): Future[Seq[WordStudy]]
+  def getWordsForUser(userId: Int, includeDeleted: Boolean = false): Future[Seq[(Word, WordStudy)]]
+  def getWordsForTraining(userId: Int, limit: Int): Future[Seq[(Word, WordStudy)]]
+  def getWordsForTrainingCount(userId: Int): Future[Int]
   def upsertWordStudy(wordStudy: WordStudy): Future[Option[Int]]
+  def archiveWordStudy(wordStudyId: Int): Future[Int]
+
+  def getWordStudyLearnedQty(userId: Int): Future[Seq[(Boolean, Int)]]
 }
 
 class DaoImpl extends Dao {
 
   this: DatabaseComponent
-    with ExecutionContextHolderComponent
+    with ExecutionContextComponent
     with WordModel
     with UserModel
     with WordStudyModel =>
 
   import driverProfile._
-
-  implicit val ec = executionContextHolder.context
 
   override def getWords: Future[Seq[Word]] = {
     database.run(
@@ -56,9 +63,30 @@ class DaoImpl extends Dao {
     )
   }
 
-  override def getWordStudiesByUserId(userId: Int): Future[Seq[WordStudy]] = {
+  override def getWordStudies(ids: Seq[Int]): Future[Seq[WordStudy]] = {
     database.run(
-      wordStudies.filter(_.userId === userId).result
+      wordStudies.filter(_.id inSet ids).result
+    )
+  }
+
+  override def getWordsForUser(userId: Int, includeDeleted: Boolean = false): Future[Seq[(Word, WordStudy)]] = {
+    val query =
+      for {
+        ws <- wordStudies if ws.userId === userId && (!ws.isArchived || includeDeleted)
+        w <- words if w.id === ws.wordId
+      } yield (w, ws)
+    database.run(query.result)
+  }
+
+  override def getWordsForTraining(userId: Int, limit: Int): Future[Seq[(Word, WordStudy)]] = {
+    database.run(
+      getWordsForTrainingQuery(userId).sortBy(_._2.nextTrainingAt).take(limit).result
+    )
+  }
+
+  override def getWordsForTrainingCount(userId: Int): Future[Int] = {
+    database.run(
+      getWordsForTrainingQuery(userId).length.result
     )
   }
 
@@ -66,5 +94,24 @@ class DaoImpl extends Dao {
     database.run(
       (wordStudies returning wordStudies.map(_.id)).insertOrUpdate(wordStudy)
     )
+  }
+
+  override def archiveWordStudy(wordStudyId: Int): Future[Int] = {
+    database.run(
+      wordStudies.filter(_.id === wordStudyId).map(_.isArchived).update(true)
+    )
+  }
+
+  override def getWordStudyLearnedQty(userId: Int): Future[Seq[(Boolean, Int)]] = {
+    database.run(
+      wordStudies.filter(_.userId === userId).groupBy(_.isLearned).map(q => (q._1, q._2.length)).result
+    )
+  }
+
+  private def getWordsForTrainingQuery(userId: Int) = {
+      for {
+        ws <- wordStudies if ws.userId === userId && !ws.isArchived && !ws.isLearned && ws.nextTrainingAt <= Instant.now()
+        w <- words if w.id === ws.wordId
+      } yield (w, ws)
   }
 }

@@ -15,11 +15,6 @@ object ComponentWiring {
     override def config: GeneralConfig = generalConfigImpl
   }
 
-  private lazy val executionContextHolderImpl = new SimpleExecutionContextHolder
-  trait ExecutionContextHolderComponentImpl extends ExecutionContextHolderComponent {
-    override def executionContextHolder: ExecutionContextHolder = executionContextHolderImpl
-  }
-
   private lazy val databaseImpl = new DatabaseImpl with ConfigComponentImpl
   trait DatabaseComponentImpl extends DatabaseComponent {
     override def database: Database = databaseImpl
@@ -28,7 +23,7 @@ object ComponentWiring {
   private lazy val daoImpl =
     new DaoImpl
       with DatabaseComponentImpl
-      with ExecutionContextHolderComponentImpl
+      with ExecutionContextComponentImpl
       with WordModel
       with UserModel
       with WordStudyModel
@@ -37,12 +32,13 @@ object ComponentWiring {
   }
 
   private lazy val wordsServiceImpl =
-    new WordsServiceImpl with DaoComponentImpl with ExecutionContextHolderComponentImpl
+    new WordsServiceImpl with DaoComponentImpl with ExecutionContextComponentImpl
   trait WordsServiceComponentImpl extends WordsServiceComponent {
     override def wordsService: WordsService = wordsServiceImpl
   }
 
-  private lazy val trainingServiceImpl = new TrainingServiceImpl
+  private lazy val trainingServiceImpl =
+    new TrainingServiceImpl with DaoComponentImpl with ConfigComponentImpl with ExecutionContextComponentImpl
   trait TrainingServiceComponentImpl extends TrainingServiceComponent {
     override def trainingService: TrainingService = trainingServiceImpl
   }
@@ -51,5 +47,4 @@ object ComponentWiring {
   trait AuthServiceComponentImpl extends AuthServiceComponent {
     override def authService: AuthService = authServiceImpl
   }
-
 }

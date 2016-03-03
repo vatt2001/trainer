@@ -1,6 +1,6 @@
 package ru.art0.trainer.controllers
 
-import ru.art0.trainer.services.WordsService.AddWordData
+import ru.art0.trainer.services.WordsService.{AddWordData}
 import ru.art0.trainer.services.WordsServiceComponent
 import spray.http.MediaTypes._
 import spray.routing.HttpService
@@ -16,14 +16,14 @@ trait WordsController extends BaseController {
   val route =
     pathPrefix("words") {
       get {
-        onSuccess(wordsService.getWords(DefaultUserId)) {
-          complete(_)
+        onSuccess(wordsService.getWords(DefaultUserId)) { data =>
+          complete(data)
         }
       } ~
       post {
         entity(as[AddWordData]) { data =>
           onSuccess(wordsService.addWord(DefaultUserId, data)) { result =>
-            complete("OK")
+            complete(IdResponse(result))
           }
         }
       } ~
@@ -33,11 +33,11 @@ trait WordsController extends BaseController {
             complete("OK")
           }
         } ~
-          delete {
-            onSuccess(wordsService.deleteWord(wordStudyId)) { result =>
-              complete("OK")
-            }
+        delete {
+          onSuccess(wordsService.deleteWord(wordStudyId)) { result =>
+            complete("OK")
           }
+        }
       }
     }
 }

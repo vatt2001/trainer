@@ -25,6 +25,10 @@ create table word_study(
   user_id int not null,
   word_id int not null,
   study_method_id int not null check(study_method_id = 1),
+  is_learned boolean not null default false,
+  is_archived boolean not null default false,
+  created_at timestamp with time zone not null default current_timestamp,
+  next_training_at timestamp with time zone not null default current_timestamp,
   training_qty_total int not null check(training_qty_total >= 0),
   training_qty_correct int not null check(training_qty_correct >= 0),
 

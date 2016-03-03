@@ -7,7 +7,7 @@ trait UserModel extends AbstractModel {
   import driverProfile._
 
   class UserTable(tag: Tag) extends Table[User](tag, "user") {
-    def id = column[Int]("id", O.PrimaryKey)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("email")
     def passwordHash = column[String]("passwordHash")
     def isActive = column[Boolean]("is_active")

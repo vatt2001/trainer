@@ -9,13 +9,13 @@ trainerApp.service('Server', ['$resource',
     function($resource){
         return {
             userResource: $resource('api/user/:action/', {action: '@action'}),
-            //wordsResource: $resource('api/words/:id', {id: '@id'}),
-            //trainingResource: $resource('api/training/:action', {action: '@action'}),
+            wordsResource: $resource('api/words/:id', {id: '@id'}),
+            trainingResource: $resource('api/training/:action', {action: '@action'}),
 
             // Temporary resources
-            wordsResource: $resource('api/words.json'),
-            trainingResource: $resource('api/training.json'),
-            trainingStatsResource: $resource('api/training_stats.json'),
+            //wordsResource: $resource('api/words.json'),
+            //trainingResource: $resource('api/training.json'),
+            //trainingStatsResource: $resource('api/training_stats.json'),
 
             userLogin: function(email, password) {
                 return this.userResource.save({action: 'login', email: email, password: password}).$promise;
@@ -50,7 +50,7 @@ trainerApp.service('Server', ['$resource',
             },
 
             getTrainingStats: function() {
-                return this.trainingStatsResource.get({action: 'stats'}).$promise;
+                return this.trainingResource.get({action: 'stats'}).$promise;
             }
         };
     }
@@ -76,7 +76,7 @@ trainerApp.service('Trainer', [
 
             reset: function() {
                 this.setWords([]);
-                this.result = [];
+                this.answers = [];
             },
 
             hasPrev: function() {
@@ -123,24 +123,28 @@ trainerApp.service('Trainer', [
 
             setCurrentResult: function(successful) {
                 if (this.currentIndex >= 0 && this.currentIndex < this.maxIndex) {
-                    this.result[this.currentIndex] = !!successful;
+                    this.answers[this.currentIndex] = !!successful;
                 }
             },
 
             getCurrentResult: function(successful) {
-                if (this.currentIndex >= 0 && this.currentIndex < this.maxIndex && this.result[this.currentIndex] !== undefined) {
-                    return this.result[this.currentIndex];
+                if (this.currentIndex >= 0 && this.currentIndex < this.maxIndex && this.answers[this.currentIndex] !== undefined) {
+                    return this.answers[this.currentIndex];
                 } else {
                     return null;
                 }
             },
 
             getResult: function() {
-                return this.result;
+                var result = [];
+                for (var i = 0; i < this.maxIndex; i++) {
+                    result.push({id: this.words[i].id, isCorrect: this.answers[i]})
+                }
+                return result;
             },
 
             getResultRememberedQty: function() {
-                return this.result.filter(function(r) { return r; }).length;
+                return this.answers.filter(function(r) { return r; }).length;
             },
 
             getResultForgottenQty: function() {

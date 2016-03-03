@@ -52,11 +52,11 @@ API сервера:
   - Request: empty
   - Response: 200, {words:[{id, spelling, translation, transcription}]}
 - /api/training (POST/PUT) - загрузить результат изучения
-  - Request: {answers:[{word_id, is_correct}]}
+  - Request: {answers:[{id, isCorrect}]}
   - Response: 200
 - /api/training/stats (GET) - get current training statistics
   - Request: empty
-  - Response: 200, {words_total, words_to_repeat, words_learned}
+  - Response: 200, {wordsTotal, wordsToRepeat, wordsLearned}
   
 
 
@@ -68,4 +68,9 @@ API сервера:
 
 
 TODO:
+- change response header Server
 - add slick transactions
+
+
+Ideas:
+- keyboard bindings when using on big computer
