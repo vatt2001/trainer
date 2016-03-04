@@ -67,10 +67,26 @@ API сервера:
 - training: id, user_id, method_id, word_id, created_at, next_repeat_at, tries, correct, method_step, is_learned
 
 
-TODO:
+Must have TODO:
++ learning strategy with increasing intervals and finishing
++ relearning words (reset intervals)
+- adding new words
+- some kind of Authentication
+- serving front static from configurable directory
+- move intervals setup to configuration
+- packaging for deployment, config for logging (including log rotation)
+- VM setup: nginx + java app on Amazon under separate user
+
+Possible TODO:
+- refactoring: introduce StudyMethodFactories
+- refactoring: move progressSymbol to front
+- refactoring: merge Word and WordStudy into one entity, separate Word in DB from Word in Json protocol
+- refactoring: introduce data element in API response
+- refactoring: front: more DRY error handling
 - change response header Server
 - add slick transactions
 
 
 Ideas:
 - keyboard bindings when using on big computer
+

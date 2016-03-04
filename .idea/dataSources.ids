@@ -36,6 +36,7 @@
       <column name="created_at" sqlType="TIMESTAMP WITH TIME ZONE" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="J25vdyc="/>
       <column name="next_training_at" sqlType="TIMESTAMP WITH TIME ZONE" precision="2000000000" scale="10" nullable="false" jdbcType="12" def="J25vdyc="/>
       <column name="is_learned" sqlType="BOOLEAN" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="ZmFsc2U="/>
+      <column name="training_stage" sqlType="INT" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MA=="/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_word_study_1" columns="word_id" ref-table="word" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <foreign-key name="#FAKE_word_study_2" columns="user_id" ref-table="user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>

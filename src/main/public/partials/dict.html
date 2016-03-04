@@ -29,8 +29,8 @@
     </thead>
     <tbody>
         <tr data-ng-repeat="word in words | filter:query" class="{{getStatusRowBg(word.status)}}">
-            <td><span class="{{getStatusIcon(word.status)}}" aria-hidden="true"></span></td>
-            <td>{{word.trainingQtyCorrect}}/{{word.trainingQtyTotal}}</td>
+            <td data-ng-click="repeat(word)"><span class="{{getStatusIcon(word.status)}}" aria-hidden="true"></span></td>
+            <td data-ng-click="repeat(word)">{{word.progressSymbol}}&nbsp;{{word.trainingQtyCorrect}}/{{word.trainingQtyTotal}}</td>
             <td>{{word.spelling}}</td>
             <td>{{word.translation}}</td>
         </tr>

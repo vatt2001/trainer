@@ -19,6 +19,7 @@ trait Dao {
   def upsertWord(word: Word): Future[Option[Int]]
   def deleteWord(wordId: Int): Future[Boolean]
 
+  def getWordStudy(id: Int): Future[Option[WordStudy]]
   def getWordStudies(ids: Seq[Int]): Future[Seq[WordStudy]]
   def getWordsForUser(userId: Int, includeDeleted: Boolean = false): Future[Seq[(Word, WordStudy)]]
   def getWordsForTraining(userId: Int, limit: Int): Future[Seq[(Word, WordStudy)]]
@@ -60,6 +61,12 @@ class DaoImpl extends Dao {
   override def getWordById(id: Int): Future[Option[Word]] = {
     database.run(
       words.filter(_.id === id).result.headOption
+    )
+  }
+
+  override def getWordStudy(id: Int): Future[Option[WordStudy]] = {
+    database.run(
+      wordStudies.filter(_.id === id).result.headOption
     )
   }
 

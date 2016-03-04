@@ -29,8 +29,9 @@ create table word_study(
   is_archived boolean not null default false,
   created_at timestamp with time zone not null default current_timestamp,
   next_training_at timestamp with time zone not null default current_timestamp,
-  training_qty_total int not null check(training_qty_total >= 0),
-  training_qty_correct int not null check(training_qty_correct >= 0),
+  training_stage int not null default 0,
+  training_qty_total int not null default 0 check(training_qty_total >= 0),
+  training_qty_correct int not null default 0 check(training_qty_correct >= 0),
 
   foreign key (user_id) references user(id),
   foreign key (word_id) references word(id)

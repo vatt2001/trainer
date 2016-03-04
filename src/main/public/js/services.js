@@ -9,7 +9,7 @@ trainerApp.service('Server', ['$resource',
     function($resource){
         return {
             userResource: $resource('api/user/:action/', {action: '@action'}),
-            wordsResource: $resource('api/words/:id', {id: '@id'}),
+            wordsResource: $resource('api/words/:id', {id: '@id'}, {'put' : {method: 'PUT'}}),
             trainingResource: $resource('api/training/:action', {action: '@action'}),
 
             // Temporary resources

@@ -1,17 +1,18 @@
 package ru.art0.trainer.helpers
 
-import ru.art0.trainer.helpers.WordToStudyHelper.{WordToStudyStatus, WordToStudy}
+import ru.art0.trainer.helpers.WordToStudyHelper.{WordToStudyStatusEnum, WordToStudy}
 import ru.art0.trainer.models.StudyMethod
 import ru.art0.trainer.services.TrainingService._
-import ru.art0.trainer.services.WordsService.{WordsList, AddWordData}
+import ru.art0.trainer.services.WordsService.{SingleWord, WordsList, AddWordData}
 import spray.json._
 
 
 object JsonProtocol extends DefaultJsonProtocol {
   implicit val studyMethodDataFormat = jsonEnum(StudyMethod)
-  implicit val wordToStudyStatusDataFormat = jsonEnum(WordToStudyStatus)
-  implicit val wordResponseDataFormat = jsonFormat7(WordToStudy)
+  implicit val wordToStudyStatusDataFormat = jsonEnum(WordToStudyStatusEnum)
+  implicit val wordResponseDataFormat = jsonFormat8(WordToStudy)
   implicit val addWordDataFormat = jsonFormat2(AddWordData)
+  implicit val singleWordDataFormat = jsonFormat1(SingleWord)
   implicit val wordsListDataFormat = jsonFormat1(WordsList)
   implicit val trainingNewDataFormat = jsonFormat1(TrainingNew)
   implicit val trainingAnswerFormat = jsonFormat2(TrainingAnswer)

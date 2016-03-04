@@ -52,6 +52,33 @@ trainerApp.controller('DictController', ['$scope', '$location', 'Server', 'notif
             $location.path(path);
         };
 
+        $scope.repeat = function(word) {
+            if (!confirm("Do you want to repeat word \"" + word.spelling + "\"?")) {
+                return;
+            }
+
+            $scope.isWorking = true;
+
+            Server.repeatWord(word.id).then(
+                function(response) {
+                    $scope.isWorking = false;
+                    if (response.word) {
+                        var index = $scope.words.indexOf(word);
+                        if (index != -1) {
+                            $scope.words[index] = response.word;
+                        }
+                    } else {
+                        notify("Unknown repeat word error");
+                    }
+                },
+                function(error) {
+                    $scope.isWorking = false;
+                    notify("Error repeating word: " + error);
+                    $location.path('/');
+                }
+            );
+        };
+
         $scope.getStatusIcon = function(statusName) {
             switch (statusName) {
                 case "learning-waiting": return "glyphicon glyphicon-time";
@@ -59,7 +86,8 @@ trainerApp.controller('DictController', ['$scope', '$location', 'Server', 'notif
                 case "learned": return "glyphicon glyphicon-ok";
                 default: return "";
             }
-        }
+        };
+
         $scope.getStatusRowBg = function(statusName) {
             switch (statusName) {
                 case "learning-waiting": return "warning";
@@ -67,7 +95,7 @@ trainerApp.controller('DictController', ['$scope', '$location', 'Server', 'notif
                 case "learned": return "success";
                 default: return "";
             }
-        }
+        };
     }
 ]);
 

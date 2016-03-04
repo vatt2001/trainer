@@ -13,6 +13,7 @@ case class WordStudy(
   isArchived: Boolean,
   createdAt: Instant,
   nextTrainingAt: Instant,
+  trainingStage: Int = 0,
   trainingQtyTotal: Int = 0,
   trainingQtyCorrect: Int = 0
 )
@@ -31,10 +32,11 @@ trait WordStudyModel extends AbstractModel {
     def isArchived = column[Boolean]("is_archived")
     def createdAt = column[Instant]("created_at")
     def nextTrainingAt = column[Instant]("next_training_at")
+    def trainingStage = column[Int]("training_stage")
     def trainingQtyTotal = column[Int]("training_qty_total")
     def trainingQtyCorrect = column[Int]("training_qty_correct")
 
-    def * = (id, userId, wordId, studyMethodId, isLearned, isArchived, createdAt, nextTrainingAt, trainingQtyTotal, trainingQtyCorrect) <>
+    def * = (id, userId, wordId, studyMethodId, isLearned, isArchived, createdAt, nextTrainingAt, trainingStage, trainingQtyTotal, trainingQtyCorrect) <>
       (WordStudy.tupled, WordStudy.unapply)
 
     def wordStudyIdx = index("idx_word_study", studyMethodId, unique = false)

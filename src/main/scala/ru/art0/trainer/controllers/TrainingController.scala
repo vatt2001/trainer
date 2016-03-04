@@ -1,15 +1,15 @@
 package ru.art0.trainer.controllers
 
+import ru.art0.trainer.components.ExecutionContextComponent
 import ru.art0.trainer.services.TrainingService.TrainingResult
 import ru.art0.trainer.services.TrainingServiceComponent
 import spray.routing.HttpService
-import scala.concurrent.ExecutionContext.Implicits.global
 import spray.httpx.SprayJsonSupport._
 import ru.art0.trainer.helpers.JsonProtocol._
 
 trait TrainingController extends BaseController {
 
-  this: HttpService with TrainingServiceComponent =>
+  this: HttpService with TrainingServiceComponent with ExecutionContextComponent =>
 
   val route =
     pathPrefix("training") {
